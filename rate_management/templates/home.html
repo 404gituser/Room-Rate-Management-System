@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <!-- {{ room.room_id }} -->
+    <div class="container mt-4">
+        <a href="{% url 'add_rate' %}" class="btn btn-dark">Add Rate</a>
+            <br/>
+        <div class="row mt-4">
+            {% for price, rooms in rooms_grouped.items %}
+            <a href="{% url 'rate_details' rooms.0.id %}" class="btn btn-dark mb-4"><strong>Price</strong>: {{ price }}</a>
+                {% for room in rooms %}
+
+                    <div class="col-md-3 mb-4">
+                        <div class="card">
+                            <h5 class="card-title p-2">
+                                <a href="{% url 'rate_details' room.id %}" class="card-link">
+                                    {{ room.room_name }}
+                                </a>
+                            </h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Room ID: </strong>{{ room.room_id }}</li>
+                                <li class="list-group-item"><strong>Base Price: </strong>{{ room.default_rate }}</li>
+                                <!-- <li class="list-group-item">A third item</li> -->
+                                </ul>
+                                <div class="card-body">
+                                    {% if room.updated_rate != room.default_rate %}
+                                    <!-- <p>----{{ room.updated_rate }}</p> -->
+                                    <!-- <p>!!!{{ room.default_rate }}</p> -->
+
+                                    <p><i class="text-warning">Rate Overrided</i></p>
+                                    {% endif %}
+
+                                    {% if room.lowest_price < room.updated_rate %}
+                                    <p><i class="text-success">Discount Applied</i></p>
+
+                                    <p class="list-group-item"><strong>Offer Price: </strong>{{ room.lowest_price }}</p>
+
+                                    {% endif %}
+                                <a href="{% url 'edit_rate' room.id %}" class="card-link">Edit</a>
+                                <a href="{% url 'delete_rate' room.id %}" class="card-link">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+            {% endfor %}
+            <hr>
+        {% endfor %}
+
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html"%}
+
+{% block content %}
+
+<p><i>By Default Discounts would be applied to all the room rates</i></h1>
+
+
+
+<div class="col-md-6 offset-md-3 form-group">
+    <br/>
+    <form method="POST", action="{% url 'add_discount' %}">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <br/>
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+        <a href="{% url 'discounts' %}" class="btn btn-secondary">Previous Page</a>
+    
+</form>
+</div>
+
+{% endblock %}

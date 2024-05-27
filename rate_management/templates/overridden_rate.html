@@ -1,0 +1,63 @@
+
+{% extends "base.html"%}
+
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+    {% if room_rate %}
+        Room Rate Override Rate
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"> {{ room_rate.room_id }}</h5>
+      <p class="card-text">Room Name: {{ room_rate.room_name }}</p>
+      <p class="card-text"><strong>Base Price: {{ room_rate.default_rate }} </strong></p>
+
+      <a href="{% url 'add_override' %}" class="btn btn-primary"><strong>Add Override Rate </strong></a>
+      <a href="{% url 'home' %}" class="btn btn-secondary"><strong>Previous Page</strong></a>
+
+    {% endif %}
+    
+    </div>
+  </div>
+
+  <br/>
+<div>
+    {% if overridden_rates %}
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead class = "table-dark" >
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Overrided Rate</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+    
+    
+        </tr>
+        </thead>
+        <tbody>
+  
+          {% for overridden_rate in overridden_rates %}
+            <tr>
+  
+              <td>{{ overridden_rate.stay_date }}</td>
+              <td>{{ overridden_rate.overridden_rate }}</td>
+              <td><a href="{% url 'edit_override' overridden_rate.id %}">Update</td>
+              <td><a href="{% url 'delete_override' overridden_rate.id %}">Delete</td>
+
+    
+            </tr>
+            {% endfor %}
+  
+    </tbody>
+  </table>
+  {% else %}
+  <div class="alert alert-warning" role="alert">
+    No Overrides found.
+</div>
+  {% endif %}
+  
+</div>
+
+  {% endblock %}

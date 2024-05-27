@@ -1,0 +1,101 @@
+
+{% extends "base.html"%}
+
+
+{% block content %}
+
+
+    <br/>
+
+
+    <div class="card" style="width: 20rem;">
+        <div class="card-body">
+          <!-- <h5 class="card-title">Find the availble discounts</h5> -->
+          <!-- <h6 class="card-subtitle mb-2 text-body-secondary">Select</h6> -->
+          <form method="POST", action="{% url 'rate_offers' %}">
+            {% csrf_token %}
+    
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Filter</button>
+
+        <a href="{% url 'home' %}" class="btn btn-secondary">Previous Page</a>
+            <br/>
+        </form>
+    
+
+        </div>
+      </div>
+   
+<div >
+
+ 
+    {% if rooms %}
+    <br/>
+    <table class="table table-striped table-hover table-bordered ">
+        <thead class = "table-dark" >
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Room ID</th>
+            <th scope="col">Room Name</th>
+            <th scope="col">Base Rate</th>
+            <th scope="col">Final(lowest) Rate</th>
+            <!-- <th scope="col"></th> -->
+            <!-- <th scope="col"></th> -->
+            
+        </tr>
+        </thead>
+        <tbody>
+  
+          {% for room in rooms %}
+            <tr>
+              <td>{{ room.date }}</td>
+              <td>{{ room.room_id }}</td>
+              <td>{{ room.room_name }}</td>
+              <td>{{ room.default_rate }}</td>
+              <td>{{ room.lowest_price }}</td>
+
+
+            </tr>
+            {% endfor %}
+  
+    </tbody>
+  </table>
+  {% else %}
+  <br/>
+  <table class="table table-striped table-hover table-bordered ">
+      <thead class = "table-dark" >
+      <tr>
+        <th scope="col">Date</th>
+
+          <th scope="col">Room ID</th>
+          <th scope="col">Room Name</th>
+          <th scope="col">Base Rate</th>
+          <th scope="col">Final(lowest) Rate</th>
+          <!-- <th scope="col"></th> -->
+          <!-- <th scope="col"></th> -->
+          
+      </tr>
+      </thead>
+      <tbody>
+
+        {% for day in rates_list %}
+          <tr>
+            <td>{{ day.date }}</td>
+
+            <td>{{ day.room_id }}</td>
+            <td>{{ day.room_name }}</td>
+            <td>{{ day.default_rate }}</td>
+            <td>{{ day.lowest_price }}</td>
+
+
+          </tr>
+          {% endfor %}
+
+  </tbody>
+</table>
+</div>
+  {% endif %}
+  
+</div>
+
+  {% endblock %}

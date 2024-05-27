@@ -1,0 +1,85 @@
+
+{% extends "base.html"%}
+
+
+{% block content %}
+
+  <br/>
+    <a href="{% url 'add_discount' %}" class="btn btn-primary"><strong>Add Discount </strong></a>
+    <a href="{% url 'home' %}" class="btn btn-secondary"><strong>Previous Page</strong></a>
+    <br/>
+<div >
+    {% if discounts %}
+    <br/>
+    <table class="table table-striped table-hover table-bordered ">
+        <thead class = "table-dark" >
+        <tr>
+            <th scope="col">Discount ID</th>
+            <th scope="col">Discount Name</th>
+            <th scope="col">Discount Type</th>
+            <th scope="col">Discount Value</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            
+        </tr>
+        </thead>
+        <tbody>
+  
+          {% for discount in discounts %}
+            <tr>
+              <td>{{ discount.discount_id }}</td>
+              <td>{{ discount.discount_name }}</td>
+              <td>{{ discount.discount_type }}</td>
+
+              {% if discount.discount_type == "Percentage" %}
+              <td>{{ discount.discount_value }}%</td>
+              {% else %}
+              <td>{{ discount.discount_value }}</td>
+            {% endif %}
+
+              
+            <!-- <td><button href="{% url 'edit_discount' discount.id %}" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Update</td> -->
+            <td><a href="{% url 'edit_discount' discount.id %}">Update</td>
+
+            <td><a href="{% url 'delete_discount' discount.id %}">Delete</td>
+
+
+                <!-- Button trigger modal -->
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="updateDiscountModal" tabindex="-1" aria-labelledby="updateDiscountModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Update Discount</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+            </tr>
+            {% endfor %}
+  
+    </tbody>
+  </table>
+  {% else %}
+  <br/>
+
+  <div class="alert alert-warning" role="alert">
+    No Discounts Available.
+</div>
+  {% endif %}
+  
+</div>
+
+  {% endblock %}
